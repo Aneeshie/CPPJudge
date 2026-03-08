@@ -25,7 +25,7 @@ This project is being built as a learning project to explore backend architectur
 - golang-migrate (database migrations)
 
 ## Project Structure
-
+```bash
 cmd/
     server/           # application entry point
 
@@ -40,6 +40,7 @@ internal/
     config/           # configuration
 
 migrations/           # database migrations
+```
 
 ## Running the Project
 
@@ -47,28 +48,7 @@ Start the services:
 
 ```bash
 docker compose up
-
-
----
-
-## 6️⃣ API Endpoints
-
-Example:
-
-```md
-## API Endpoints
-
-### Create Problem
-
-POST /problems
-
-### Get Problem
-
-GET /problems/:slug
-
-### List Problems
-
-GET /problems
+```
 
 ## Future Work
 
