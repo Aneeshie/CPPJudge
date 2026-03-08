@@ -79,14 +79,15 @@ func (r *Repository) GetProblems(ctx context.Context) ([]models.Problem, error){
 		var p models.Problem
 
 		err := rows.Scan(
+			&p.ID,
 			&p.Slug,
 			&p.Title,
-			&p.Difficulty,
 			&p.Description,
+			&p.Difficulty,
 			&p.TimeLimitMs,
 			&p.MemoryLimitMb,
 			&p.CreatedAt,
-		)
+			)
 		if err != nil {
 			return nil, err
 		}
@@ -99,6 +100,42 @@ func (r *Repository) GetProblems(ctx context.Context) ([]models.Problem, error){
 	}
 
 	return problems, nil
+
+}
+
+func (r *Repository) GetProblemBySlug(ctx context.Context, slug string) (*models.Problem, error){
+	query:= `
+	SELECT
+	id,
+	slug,
+	title,
+	description,
+	difficulty,
+	time_limit_ms,
+	memory_limit_mb,
+	created_at
+	FROM problems
+	WHERE slug = $1
+	`
+
+	var problem models.Problem
+
+	err := r.db.QueryRow(ctx, query, slug).Scan(
+		&problem.ID,
+		&problem.Slug,
+		&problem.Title,
+		&problem.Description,
+		&problem.Difficulty,
+		&problem.TimeLimitMs,
+		&problem.MemoryLimitMb,
+		&problem.CreatedAt,
+		)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &problem,nil
 
 }
 

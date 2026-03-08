@@ -39,7 +39,7 @@ func (h *Handler) CreateProblemHandler(c *gin.Context){
 	c.JSON(http.StatusCreated, gin.H{"problem": problem})
 }
 
-func (h *Handler) GetProblemsHanlder(c *gin.Context){
+func (h *Handler) GetProblemsHandler(c *gin.Context){
 	problems, err := h.service.GetProblems(c.Request.Context())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -51,4 +51,16 @@ func (h *Handler) GetProblemsHanlder(c *gin.Context){
 	c.JSON(http.StatusOK, gin.H{
 		"problems": problems,
 	})
+}
+
+func (h *Handler) GetProblemBySlugHandler(c *gin.Context){
+	slug := c.Param("slug")
+	problem, err:= h.service.GetProblemBySlug(c.Request.Context(), slug)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "could'nt find the problem", "message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, problem)
 }

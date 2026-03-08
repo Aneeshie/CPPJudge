@@ -23,7 +23,8 @@ func NewServer(db *pgxpool.Pool) *Server{
 
 	//problem routes
 	router.POST("/problems",problemHandler.CreateProblemHandler)
-	router.GET("/problems", problemHandler.GetProblemsHanlder)
+	router.POST("/problems/:slug",problemHandler.GetProblemBySlugHandler)
+	router.GET("/problems", problemHandler.GetProblemsHandler)
 
 	return &Server{
 		router: router,
