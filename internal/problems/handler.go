@@ -26,7 +26,7 @@ func (h *Handler) CreateProblemHandler(c *gin.Context){
 	}
 
 	if req.Description == "" || req.Difficulty == "" || req.Title == "" {
-		c.JSON(http.StatusNotAcceptable, gin.H{"error": "invalid inputs"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid inputs"})
 		return
 	}
 

@@ -57,6 +57,7 @@ func (r *Repository) GetProblems(ctx context.Context) ([]models.Problem, error){
 	id,
 	slug,
 	title,
+	description,
 	difficulty,
 	time_limit_ms,
 	memory_limit_mb,
@@ -93,6 +94,11 @@ func (r *Repository) GetProblems(ctx context.Context) ([]models.Problem, error){
 		problems = append(problems, p)
 	}
 
-	return problems,err
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return problems, nil
+
 }
 
