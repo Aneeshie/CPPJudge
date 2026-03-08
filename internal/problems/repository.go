@@ -51,3 +51,48 @@ func (r *Repository) CreateProblem(ctx context.Context, p *models.Problem) (*mod
 	return p, nil
 }
 
+func (r *Repository) GetProblems(ctx context.Context) ([]models.Problem, error){
+	query := `
+	SELECT
+	id,
+	slug,
+	title,
+	difficulty,
+	time_limit_ms,
+	memory_limit_mb,
+	created_at
+	FROM problems
+	ORDER BY created_at DESC
+	LIMIT 20;
+	`
+
+	rows,err := r.db.Query(ctx,query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var problems []models.Problem
+
+	for rows.Next() {
+		var p models.Problem
+
+		err := rows.Scan(
+			&p.Slug,
+			&p.Title,
+			&p.Difficulty,
+			&p.Description,
+			&p.TimeLimitMs,
+			&p.MemoryLimitMb,
+			&p.CreatedAt,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		problems = append(problems, p)
+	}
+
+	return problems,err
+}
+

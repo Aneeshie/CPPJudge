@@ -29,16 +29,15 @@ func (s *Service) CreateProblem(ctx context.Context, req models.CreateProblemReq
 		MemoryLimitMb: 256,
 	}
 
-	problem, err := s.repo.CreateProblem(ctx,problem)
-	if err != nil {
-		return nil, err
-	}
-
-	return problem,err
+	return s.repo.CreateProblem(ctx,problem)
 }
 
 func slugify(title string) string {
 	slug := strings.ToLower(title)
 	slug = strings.ReplaceAll(slug," ", "-")
 	return slug
+}
+
+func (s *Service) GetProblems(ctx context.Context) ([]models.Problem, error){
+	return s.repo.GetProblems(ctx)
 }

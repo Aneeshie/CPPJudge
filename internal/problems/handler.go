@@ -38,3 +38,17 @@ func (h *Handler) CreateProblemHandler(c *gin.Context){
 
 	c.JSON(http.StatusCreated, gin.H{"problem": problem})
 }
+
+func (h *Handler) GetProblemsHanlder(c *gin.Context){
+	problems, err := h.service.GetProblems(c.Request.Context())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "could not fetch problems",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"problems": problems,
+	})
+}
