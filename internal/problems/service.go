@@ -41,3 +41,14 @@ func slugify(title string) string {
 func (s *Service) GetProblems(ctx context.Context) ([]models.Problem, error){
 	return s.repo.GetProblems(ctx)
 }
+
+func(s *Service) GetProblemBySlug(ctx context.Context, slug string) (*models.Problem, error){
+	return s.repo.GetProblemBySlug(ctx,slug)
+}
+
+func (s *Service) DeleteProblemBySlug(ctx context.Context, slug string) error {
+	return s.repo.DeleteProblemBySlug(ctx,slug)
+}
+func (s *Service) UpdateProblem(ctx context.Context, slug string, req models.UpdateProblemRequest) (*models.Problem, error) {
+	return s.repo.UpdateProblem(ctx, slug, req)
+}

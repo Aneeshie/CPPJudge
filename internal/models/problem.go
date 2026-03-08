@@ -18,3 +18,11 @@ type CreateProblemRequest struct {
 	Description string `json:"description"`
 	Difficulty string `json:"difficulty"`
 }
+
+type UpdateProblemRequest struct {
+	Title         string `json:"title"`
+	Description   string `json:"description"`
+	Difficulty    string `json:"difficulty"`
+	TimeLimitMs   int    `json:"time_limit_ms"`
+	MemoryLimitMb int    `json:"memory_limit_mb"`
+}
