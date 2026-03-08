@@ -2,8 +2,8 @@ package server
 
 import (
 	"log"
-	"net/http"
 
+	"github.com/Aneeshie/cpp-judge/internal/problems"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -17,9 +17,11 @@ func NewServer(db *pgxpool.Pool) *Server{
 	router := gin.Default()
 
 	//all the routes and stuff below
-	router.GET("/", func (c *gin.Context){
-		c.JSON(http.StatusOK, gin.H{"message": "ok"})
-	})
+	problemRepo := problems.NewRepository(db)
+	problemService := problems.NewService(problemRepo)
+	problemHandler := problems.NewHandler(problemService)
+
+	router.POST("/problems",problemHandler.CreateProblemHandler)
 
 	return &Server{
 		router: router,
