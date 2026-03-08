@@ -49,3 +49,6 @@ func(s *Service) GetProblemBySlug(ctx context.Context, slug string) (*models.Pro
 func (s *Service) DeleteProblemBySlug(ctx context.Context, slug string) error {
 	return s.repo.DeleteProblemBySlug(ctx,slug)
 }
+func (s *Service) UpdateProblem(ctx context.Context, slug string, req models.UpdateProblemRequest) (*models.Problem, error) {
+	return s.repo.UpdateProblem(ctx, slug, req)
+}

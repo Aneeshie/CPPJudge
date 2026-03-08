@@ -80,3 +80,28 @@ func (h *Handler) DeleteProblemHandler (c *gin.Context){
 		"message": "problem deleted",
 	})
 }
+
+func (h *Handler) UpdateProblemHandler(c *gin.Context) {
+	slug := c.Param("slug")
+
+	var req models.UpdateProblemRequest
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid request body",
+		})
+		return
+	}
+
+	problem, err := h.service.UpdateProblem(c.Request.Context(), slug, req)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "problem not found",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"problem": problem,
+	})
+}

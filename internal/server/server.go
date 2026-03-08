@@ -25,6 +25,7 @@ func NewServer(db *pgxpool.Pool) *Server{
 	router.POST("/problems",problemHandler.CreateProblemHandler)
 	router.POST("/problems/:slug",problemHandler.GetProblemBySlugHandler)
 	router.DELETE("/problems/:slug",problemHandler.DeleteProblemHandler)
+	router.PATCH("/problems/:slug",problemHandler.UpdateProblemHandler)
 	router.GET("/problems", problemHandler.GetProblemsHandler)
 
 	return &Server{
