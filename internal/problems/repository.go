@@ -139,3 +139,20 @@ func (r *Repository) GetProblemBySlug(ctx context.Context, slug string) (*models
 
 }
 
+func (r *Repository) DeleteProblemBySlug(ctx context.Context, slug string) (error) {
+	query := `
+	DELETE FROM problems
+	WHERE slug = $1
+	returning slug
+	`
+
+	var deleted string
+
+	err := r.db.QueryRow(ctx,query,slug).Scan(&deleted)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+

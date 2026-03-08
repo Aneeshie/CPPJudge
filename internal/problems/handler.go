@@ -64,3 +64,19 @@ func (h *Handler) GetProblemBySlugHandler(c *gin.Context){
 
 	c.JSON(http.StatusOK, problem)
 }
+
+func (h *Handler) DeleteProblemHandler (c *gin.Context){
+	slug := c.Param("slug")
+
+	err := h.service.DeleteProblemBySlug(c.Request.Context(), slug)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "problem not found",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "problem deleted",
+	})
+}
