@@ -10,7 +10,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main(){
+func main() {
 	err := godotenv.Load()
 	if err != nil {
 		log.Println("No .env found")
